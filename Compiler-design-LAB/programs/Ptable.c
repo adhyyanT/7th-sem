@@ -7,6 +7,7 @@
 // ith varible if the input is
 // jth nonterminal
 int table[100][TSIZE];
+char rowone[10][10],rowtwo[10][10],rowthree[10][10],rowfour[10][10];
 
 // stores all list of terminals
 // the ASCII value if use to index terminals
@@ -46,14 +47,18 @@ int isNT(char c) {
 
 // reading data from the file
 void readFromFile() {
-
-	FILE* fptr;
-	fptr = fopen("text.txt", "r");
+	
+	// FILE* fptr;
+	// fptr = fopen("text.txt", "r");
 	char buffer[255];
 	int i;
-	int j;
-	while (fgets(buffer, sizeof(buffer), fptr)) {
-		printf("%s", buffer);
+	int j,z=0;
+	int n;
+	printf("Enter the number of lines - ");
+	scanf("%d",&n);
+	printf("enter the grammar");
+	while (z<n) {
+		scanf("%s", buffer);
 		j = 0;
 		nonterminal[buffer[0] - 'A'] = 1;
 		for (i = 0; i < strlen(buffer) - 1; ++i) {
@@ -75,12 +80,12 @@ void readFromFile() {
 			}
 		}
 		pro[no_pro].len = j;
-		++no_pro;
+		++no_pro;z++;
 	}
 
 }
-
 void add_FIRST_A_to_FOLLOW_B(char A, char B) {
+	
 	int i;
 	for (i = 0; i < TSIZE; ++i) {
 		if (i != '^')
@@ -197,6 +202,7 @@ void FIRST_RHS() {
 }
 
 int main() {
+	
 	readFromFile();
 
 	follow[pro[0].str[0] - 'A']['$'] = 1;
@@ -248,7 +254,6 @@ int main() {
 		}
 		printf("\n");
 	}
-	
 	// the parse table contains '$'
 	// set terminal['$'] = 1
 	// to include '$' in the parse table
